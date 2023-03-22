@@ -328,7 +328,7 @@ const char *PCF8563_Class::formatDateTime(uint8_t style)
 
 
 #ifdef ESP32
-void PCF8563_Class::syncToSystem(const char *tz) {
+void PCF8563_Class::syncToSystem() {
 	struct tm t_tm;
     struct timeval val;
     RTC_Date dt = getDateTime();
@@ -339,22 +339,13 @@ void PCF8563_Class::syncToSystem(const char *tz) {
     t_tm.tm_mon = dt.month - 1;       //Month (starting from January, 0 for January) - Value range is [0,11]
     t_tm.tm_mday = dt.day;
 
-	// set Timezone to UTC Time so mktime() outputs UTC time
-	setenv("TZ", "UTC0", 1);
-	tzset();
-	val.tv_sec = mktime(&t_tm);
-
-	// reset to user provided time
-	setenv("TZ", tz, 1);
-	tzset();
-
+	val.tv_sec = mktime(&t_tm) - _timezone;	 // make epoch from UTC/GMT even when system timezone already set https://stackoverflow.com/questions/530519/stdmktime-and-timezone-info
 	val.tv_usec = 0;
 
-	settimeofday(&val, NULL);  // set UTC Epoch to system
+	settimeofday(&val, NULL);  // set system epoch
 }
 #endif
 
-/// @brief convert ESP Epoch to GMT Time and set RTC to this time
 void PCF8563_Class::syncToRtc()
 {
     time_t epoch;

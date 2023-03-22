@@ -192,20 +192,19 @@ public:
     void disableCLK();
 #ifdef ESP32
 	/**
-	 * @brief set System (ESP32) time from RTC (assumes UTC)
+	 * @brief set System (ESP32) time from RTC (assumes RTC is set to UTC/GMT)
 	 *
-	 * @note creates a time struct from rtc.getDateTime(); then makes the epoch from this
-     * assuming that the rtc outputs UTC
-	 *
-	 * @param tz system timezone to set after sync
+	 * @note creates a time struct from rtc.getDateTime(); then makes the 
+     * epoch from this      * assuming that the rtc outputs UTC/GMT (this
+     *  function works with system timezone already set)
 	 */
-	void syncToSystem(const char *tz);
+	void syncToSystem();
 #endif
 	/**
 	 * @brief set RTC time from System (ESP) Time
 	 *
-	 * @note uses system epoch to create UTC Time struct and then sets the RTC
-	 *
+	 * @note uses system epoch (seconds since 1970) to create UTC Time struct 
+     * (year, month, day, hours, etc) and then sets the RTC to this
 	 */
 	void syncToRtc();
 
