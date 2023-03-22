@@ -184,18 +184,32 @@ public:
     bool isTimerActive();
     void enableTimer();
     void disableTimer();
-    void setTimer(uint8_t val, uint8_t freq, bool enIntrrupt);
+    void setTimer(uint8_t val, uint8_t freq, bool enInterrupt);
     void clearTimer();
 
 
     bool enableCLK(uint8_t freq);
     void disableCLK();
 #ifdef ESP32
-    void syncToSystem();
+	/**
+	 * @brief set System (ESP32) time from RTC (assumes UTC)
+	 *
+	 * @note creates a time struct from rtc.getDateTime(); then makes the epoch from this
+     * assuming that the rtc outputs UTC
+	 *
+	 * @param tz system timezone to set after sync
+	 */
+	void syncToSystem(const char *tz);
 #endif
-    void syncToRtc();
+	/**
+	 * @brief set RTC time from System (ESP) Time
+	 *
+	 * @note uses system epoch to create UTC Time struct and then sets the RTC
+	 *
+	 */
+	void syncToRtc();
 
-    const char *formatDateTime(uint8_t sytle = PCF_TIMEFORMAT_HMS);
+    const char *formatDateTime(uint8_t style = PCF_TIMEFORMAT_HMS);
     uint32_t getDayOfWeek(uint32_t day, uint32_t month, uint32_t year);
     uint8_t status2();
 
