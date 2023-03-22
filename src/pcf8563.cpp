@@ -350,8 +350,8 @@ void PCF8563_Class::syncToRtc()
     time_t now;
     struct tm  info;
     time(&now);
-    localtime_r(&now, &info);
-    setDateTime(info.tm_year + 1900, info.tm_mon + 1, info.tm_mday, info.tm_hour, info.tm_min, info.tm_sec);
+    //localtime_r(&now, &info);
+    setDateTime(now.tm_year + 1900, now.tm_mon + 1, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec);
     // Serial.printf("syncToRtc: %d %d %d - %d %d %d \n", info.tm_year, info.tm_mon + 1, info.tm_mday, info.tm_hour, info.tm_min, info.tm_sec);
 }
 
