@@ -345,14 +345,14 @@ void PCF8563_Class::syncToSystem()
 }
 #endif
 
+/// @brief convert ESP Epoch to GMT Time and set RTC to this time
 void PCF8563_Class::syncToRtc()
 {
-    time_t now;
-    struct tm  info;
-    time(&now);
-    //localtime_r(&now, &info);
-    setDateTime(now.tm_year + 1900, now.tm_mon + 1, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec);
-    // Serial.printf("syncToRtc: %d %d %d - %d %d %d \n", info.tm_year, info.tm_mon + 1, info.tm_mday, info.tm_hour, info.tm_min, info.tm_sec);
+    time_t epoch;
+    struct tm  gmt;
+    time(&epoch);
+	gmtime_r(&epoch, &gmt);
+	setDateTime(gmt.tm_year + 1900, gmt.tm_mon + 1, gmt.tm_mday, gmt.tm_hour, gmt.tm_min, gmt.tm_sec);
 }
 
 RTC_Date::RTC_Date(
