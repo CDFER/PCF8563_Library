@@ -133,7 +133,17 @@ class PCF8563_Class
 public:
     int begin(TwoWire &port = Wire, uint8_t addr = PCF8563_SLAVE_ADDRESS);
 
-    void check();
+	/**
+	 * @brief check rtc date is ahead of the compile time
+	 *
+	 * @note if __DATE__  is in the future compared to the time
+	 * from the RTC, set the RTC to __DATE__, __TIME__
+	 *
+	 * @see __DATE__, __TIME__ are compile date time used by platformio
+	 *
+	 * @return true if time is valid, false if integrity not guaranteed
+	 */
+	void check();
 
     void setDateTime(uint16_t year,
                      uint8_t month,
@@ -151,7 +161,19 @@ public:
     void resetAlarm();
     void setAlarm(RTC_Alarm alarm);
     void setAlarm(uint8_t hour, uint8_t minute, uint8_t day, uint8_t weekday);
-    bool isVaild();
+
+	/**
+	 * @brief can clock data be trusted?
+	 *
+	 * @note The PCF8563 has an on-chip voltage-low detector (see Figure 6).
+	 * When Vdd (1-5.5V) drops below ~0.9V, bit VL in the VL_seconds register
+	 * is set to indicate that the integrity of the clock information is no
+	 * longer guaranteed. The VL flag can only be cleared by using the
+	 * interface.
+	 *
+	 * @return true if time is valid, false if integrity not guaranteed
+	 */
+	bool isValid();
 
     void setAlarmByWeekDay(uint8_t weekday);
     void setAlarmByHours(uint8_t hour);
@@ -211,8 +233,8 @@ private:
         return 0;
     }
 
-    uint8_t _isVaild = false;
-    int _address;
+	uint8_t _isValid = false;
+	int _address;
     bool _init = false;
     TwoWire *_i2cPort;
     uint8_t _data[16];

@@ -95,10 +95,10 @@ void PCF8563_Class::setDateTime(uint16_t year,
     _writeByte(PCF8563_SEC_REG, 7, _data);
 }
 
-bool PCF8563_Class::isVaild()
+bool PCF8563_Class::isValid()
 {
-    _readByte(PCF8563_SEC_REG, 1, &_isVaild);
-    return !(_isVaild  & (1 << 7));
+	_readByte(PCF8563_SEC_REG, 1, &_isValid);
+    return !(_isValid  & (1 << 7));
 }
 
 RTC_Date PCF8563_Class::getDateTime()
