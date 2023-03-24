@@ -40,6 +40,16 @@ Serial.print(&timeinfo, "%d/%m/%y %H:%M:%S");
 
 ## 🖼️ Schematic
 ![Schematic](/images/schematic.png)
+- uses a cr1220 coincell (though almost any 3v lithium coincell should work)
+- to not discharge the battery too fast disable output clock and alarms
+- Low backup current: typical 0.25 uA at 3.0 V (theoretical not tested)
+- currently I'm testing with 4.7kohm pullups on sda and scl
+- currently the crystal I'm using is a Seiko Epson Q13FC1350000400 (+-20ppm)
+- in theory this setup will drift by a maximum of ~11mins per year (https://www.analog.com/en/design-center/interactive-design-tools/real-time-clock-calculator.html)
+- in theory a 37mAh cr1220 battery will last ~14 years without any charging (incl battery self discharge)
+- 3.3V -> diode -> resistor charging of a coincell from 3.3v is hotly debated as to wether is good, ok, or horificly bad idea. I have not had any issuses but your mileage may vary
+- be careful with pcb placement (have the crystal as close to the RTC chip a possible and souround it with ground planes connected with vias)
+
 
 
 
