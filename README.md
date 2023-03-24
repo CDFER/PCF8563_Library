@@ -6,6 +6,7 @@ A library to interace esp chips with the NXP PCF8563 Real time clock (RTC) in th
 ## Features
 - use multiple I2C Busses -> rtc.begin(Wire1);
 - works with timezones (RTC is set to UTC)
+https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 - set System (ESP32) time from RTC (assumes RTC is set to UTC/GMT)
 - set RTC time from System (epoch)
 - Set RTC time over wifi example
@@ -15,6 +16,7 @@ A library to interace esp chips with the NXP PCF8563 Real time clock (RTC) in th
 #include "pcf8563.h"
 #include "time.h"
 PCF8563_Class rtc;
+const char *time_zone = "NZST-12NZDT,M9.5.0,M4.1.0/3";	// https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 
 
 Wire.begin();
