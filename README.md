@@ -11,6 +11,12 @@ https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 - set RTC time from System (epoch)
 - Set RTC time over wifi example
 
+## Warnings
+- not all functions are implemented
+- not compatible with Lewis he's Library
+- only tested with the esp32
+- under active development
+
 ### Setup
 ```c++
 #include "pcf8563.h"
