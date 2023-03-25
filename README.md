@@ -2,7 +2,6 @@ pcf8563-RTC
 =====================================
 A library to interace esp chips with the NXP PCF8563 Real time clock (RTC) in the arduino (c++) Framework.
 
-
 ## Features
 - use multiple I2C Busses -> rtc.begin(Wire1);
 - works with timezones (RTC is set to UTC)
@@ -23,7 +22,6 @@ https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 #include "time.h"
 PCF8563_Class rtc;
 const char *time_zone = "NZST-12NZDT,M9.5.0,M4.1.0/3";	// https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
-
 
 Wire.begin();
 rtc.begin(Wire);
@@ -50,11 +48,8 @@ Serial.print(&timeinfo, "%d/%m/%y %H:%M:%S");
 - 3.3V -> diode -> resistor charging of a coincell from 3.3v is hotly debated as to wether is good, ok, or horificly bad idea. I have not had any issuses but your mileage may vary
 - be careful with pcb placement (have the crystal as close to the RTC chip a possible and souround it with ground planes connected with vias)
 
-
-
-
 ## Based on the awesome work of Lewis he
 Origin created by Lewis he on April 1, 2019.
 https://github.com/lewisxhe/PCF8563_Library
 
-MIT license, all text above must be included in any redistribution
+MIT license
