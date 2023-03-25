@@ -8,7 +8,7 @@ A library to interace esp chips with the NXP PCF8563 Real time clock (RTC) in th
 https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
 - set System (ESP32) time from RTC (assumes RTC is set to UTC/GMT)
 - set RTC time from System (epoch)
-- Set RTC time over wifi example
+- Set RTC time using wifi example
 
 ## Warnings
 - not all functions are implemented
