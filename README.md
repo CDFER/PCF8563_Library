@@ -49,7 +49,7 @@ Serial.print(&timeinfo, "%d/%m/%y %H:%M:%S");
 - be careful with pcb placement (have the crystal as close to the RTC chip a possible and souround it with ground planes connected with vias)
 
 ## Based on the awesome work of Lewis he
-Origin created by Lewis he on April 1, 2019.
+Origin created by Lewis he in 2019
 https://github.com/lewisxhe/PCF8563_Library
 
 MIT license
