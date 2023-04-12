@@ -297,28 +297,36 @@ const char *PCF8563_Class::formatDateTime(uint8_t style) {
 
 #ifdef ESP32
 void PCF8563_Class::syncToSystem() {
-	struct tm t_tm;
-	struct timeval val;
-	RTC_Date dt = getDateTime();
-	t_tm.tm_hour = dt.hour;
-	t_tm.tm_min = dt.minute;
-	t_tm.tm_sec = dt.second;
-	t_tm.tm_year = dt.year - 1900;	// Year, whose value starts from 1900
-	t_tm.tm_mon = dt.month - 1;		// Month (starting from January, 0 for January) - Value range is [0,11]
-	t_tm.tm_mday = dt.day;
+	if (PCF8563_Class::isValid()) {
+		struct tm t_tm;
+		struct timeval val;
+		RTC_Date dt = getDateTime();
+		t_tm.tm_hour = dt.hour;
+		t_tm.tm_min = dt.minute;
+		t_tm.tm_sec = dt.second;
+		t_tm.tm_year = dt.year - 1900;	// Year, whose value starts from 1900
+		t_tm.tm_mon = dt.month - 1;		// Month (starting from January, 0 for January) - Value range is [0,11]
+		t_tm.tm_mday = dt.day;
 
-	val.tv_sec = mktime(&t_tm) - _timezone;	 // make epoch from UTC/GMT even when system timezone already set https://stackoverflow.com/questions/530519/stdmktime-and-timezone-info
-	val.tv_usec = 0;
+		val.tv_sec = mktime(&t_tm) - _timezone;	 // make epoch from UTC/GMT even when system timezone already set https://stackoverflow.com/questions/530519/stdmktime-and-timezone-info
+		val.tv_usec = 0;
 
-	settimeofday(&val, NULL);  // set system epoch
+		settimeofday(&val, NULL);  // set system epoch
+	} else {
+		ESP_LOGE("RTC Time is not Valid", "System Epoch Not Set");
+	}
 }
 
 void PCF8563_Class::syncToRtc() {
 	time_t epoch;
 	struct tm gmt;
 	time(&epoch);
-	gmtime_r(&epoch, &gmt);
-	setDateTime(gmt.tm_year + 1900, gmt.tm_mon + 1, gmt.tm_mday, gmt.tm_hour, gmt.tm_min, gmt.tm_sec);
+	if (epoch > 0 && epoch < 4102444800) {	// sanity check if epoch is between 1970 and 2100
+		gmtime_r(&epoch, &gmt);
+		setDateTime(gmt.tm_year + 1900, gmt.tm_mon + 1, gmt.tm_mday, gmt.tm_hour, gmt.tm_min, gmt.tm_sec);
+	} else {
+		ESP_LOGE("ESP32 Time is not Valid", "RTC Time Not Set");
+	}
 }
 #endif
 

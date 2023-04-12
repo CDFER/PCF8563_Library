@@ -185,7 +185,7 @@ class PCF8563_Class {
 	void disableCLK();
 #ifdef ESP32
 	/**
-	 * @brief set System (ESP32) time from RTC (assumes RTC is set to UTC/GMT)
+	 * @brief set System (ESP32) time from RTC if RTC data is valid (assumes RTC is set to UTC/GMT)
 	 *
 	 * @note creates a time struct from rtc.getDateTime(); then makes the
 	 * epoch from this assuming that the rtc outputs UTC/GMT (this
@@ -194,7 +194,7 @@ class PCF8563_Class {
 	void syncToSystem();
 
 	/**
-	 * @brief set RTC time from System (ESP) Time
+	 * @brief set RTC time from System (ESP) Time if ESP is between 1970 and 2100
 	 *
 	 * @note uses system epoch (seconds since 1970) to create UTC Time struct
 	 * (year, month, day, hours, etc) and then sets the RTC to this

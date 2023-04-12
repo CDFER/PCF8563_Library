@@ -1,5 +1,6 @@
 {
   "name": "pcf8563-rtc",
+  "version": "1.2.0",
   "keywords": "rtc, clock",
   "description": "A library for the PCF8563",
   "repository":
