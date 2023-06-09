@@ -20,7 +20,11 @@ A library to interface ESP chips with the NXP PCF8563 Real-Time Clock (RTC) in t
 - Not all functions are implemented
 - Not compatible with Lewis' library
 - Only tested with the ESP32
+<<<<<<< HEAD
 - Under active development
+=======
+- Under development
+>>>>>>> 3f795c7114038c2af9dbabebe87edee592d37ad9
 
 ## Setup
 
@@ -76,8 +80,13 @@ And here's the markdown table with the functions:
 
 | Function | Description |
 |----------|-------------|
+<<<<<<< HEAD
 | `int begin(TwoWire &port = Wire, uint8_t addr = PCF8563_ADDRESS)` | Initializes the PCF8563 RTC. |
 | `void setDateTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second)` | Sets the date and time on the RTC. |
+=======
+| `int begin(TwoWire &port = Wire, uint8_t addr = PCF8563_SLAVE_ADDRESS)` | Initializes the PCF8563 RTC. |
+| `void setDateTime(uint16_t year, uint8_t month, uint8_t day, uint8_t hour, uint8_t minute, uint8_t second)` | Sets the date and  time on the RTC. |
+>>>>>>> 3f795c7114038c2af9dbabebe87edee592d37ad9
 | `void setDateTime(RTC_Date date)` | Sets the date and time on the RTC using an RTC_Date object. |
 | `RTC_Date getDateTime()` | Retrieves the current date and time from the RTC. |
 | `RTC_Alarm getAlarm()` | Retrieves the alarm settings from the RTC. |
@@ -103,4 +112,8 @@ And here's the markdown table with the functions:
 | `bool syncToSystem()` | Sets the system time from the RTC if the RTC data is valid. |
 | `bool syncToRtc()` | Sets the RTC time from the system time (ESP) if the system time is between 1970 and 2100. |
 
+<<<<<<< HEAD
 Please note that not all functions are implemented, and the library is under active development. Make sure to refer to the documentation and examples for more information on how to use the library.
+=======
+Please note that not all functions are implemented, and the library is under active development. Make sure to refer to the documentation and examples for more information on how to use the library.
+>>>>>>> 3f795c7114038c2af9dbabebe87edee592d37ad9
