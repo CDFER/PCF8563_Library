@@ -39,18 +39,6 @@ int PCF8563_Class::begin(TwoWire &port, uint8_t addr) {
 	return (_i2cPort->endTransmission() == 0);
 }
 
-void PCF8563_Class::check() {
-	RTC_Date now = getDateTime();
-	RTC_Date compiled = RTC_Date(__DATE__, __TIME__);
-
-	// Serial.printf("%d:%d:%d - %d:%d:%d\n", compiled.year, compiled.month, compiled.day, compiled.hour, compiled.minute, compiled.second);
-	if (now.year < compiled.year ||
-		(now.year == compiled.year && now.month < compiled.month) ||
-		(now.year == compiled.year && now.month == compiled.month && now.day < compiled.day)) {
-		setDateTime(compiled);
-	}
-}
-
 void PCF8563_Class::setDateTime(RTC_Date date) {
 	setDateTime(date.year, date.month, date.day, date.hour, date.minute, date.second);
 }
@@ -296,7 +284,7 @@ const char *PCF8563_Class::formatDateTime(uint8_t style) {
 }
 
 #ifdef ESP32
-void PCF8563_Class::syncToSystem() {
+bool PCF8563_Class::syncToSystem() {
 	if (PCF8563_Class::isValid()) {
 		struct tm t_tm;
 		struct timeval val;
@@ -312,20 +300,24 @@ void PCF8563_Class::syncToSystem() {
 		val.tv_usec = 0;
 
 		settimeofday(&val, NULL);  // set system epoch
+		return true;
 	} else {
 		ESP_LOGE("RTC Time is not Valid", "System Epoch Not Set");
+		return false;
 	}
 }
 
-void PCF8563_Class::syncToRtc() {
+bool PCF8563_Class::syncToRtc() {
 	time_t epoch;
 	struct tm gmt;
 	time(&epoch);
 	if (epoch > 0 && epoch < 4102444800) {	// sanity check if epoch is between 1970 and 2100
 		gmtime_r(&epoch, &gmt);
 		setDateTime(gmt.tm_year + 1900, gmt.tm_mon + 1, gmt.tm_mday, gmt.tm_hour, gmt.tm_min, gmt.tm_sec);
+		return true;
 	} else {
 		ESP_LOGE("ESP32 Time is not Valid", "RTC Time Not Set");
+		return false;
 	}
 }
 #endif
@@ -356,47 +348,6 @@ uint8_t RTC_Date::StringToUint8(const char *pString) {
 		pString++;
 	}
 	return value;
-}
-
-RTC_Date::RTC_Date(const char *date, const char *time) {
-	// sample input: date = "Dec 26 2009", time = "12:34:56"
-	year = 2000 + StringToUint8(date + 9);
-	// Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
-	switch (date[0]) {
-		case 'J':
-			if (date[1] == 'a')
-				month = 1;
-			else if (date[2] == 'n')
-				month = 6;
-			else
-				month = 7;
-			break;
-		case 'F':
-			month = 2;
-			break;
-		case 'A':
-			month = date[1] == 'p' ? 4 : 8;
-			break;
-		case 'M':
-			month = date[2] == 'r' ? 3 : 5;
-			break;
-		case 'S':
-			month = 9;
-			break;
-		case 'O':
-			month = 10;
-			break;
-		case 'N':
-			month = 11;
-			break;
-		case 'D':
-			month = 12;
-			break;
-	}
-	day = StringToUint8(date + 4);
-	hour = StringToUint8(time);
-	minute = StringToUint8(time + 3);
-	second = StringToUint8(time + 6);
 }
 
 RTC_Alarm::RTC_Alarm(
