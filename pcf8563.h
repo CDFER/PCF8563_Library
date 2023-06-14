@@ -321,7 +321,7 @@ class PCF8563_Class {
 	bool enableCLK(uint8_t freq);
 
 	/**
-	 * @brief Disables the CLK output.
+	 * @brief Disables the CLK output, reducing power consumption from 550nA to 250nA.
 	 */
 	void disableCLK();
 

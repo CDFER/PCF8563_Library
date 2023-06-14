@@ -1,13 +1,28 @@
 {
   "name": "pcf8563-rtc",
   "version": "1.2.0",
-  "keywords": "rtc, clock",
+  "keywords": [
+    "rtc",
+    "clock"
+  ],
   "description": "A library for the PCF8563",
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/CDFER/pcf8563-RTC.git"
   },
   "frameworks": "arduino",
-  "platforms": "espressif32"
+  "platforms": {
+    "espressif32": {}
+  },
+  "homepage": "https://github.com/CDFER/pcf8563-RTC",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "your-email@example.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/CDFER/pcf8563-RTC/issues"
+  }
 }
