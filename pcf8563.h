@@ -179,6 +179,28 @@ class PCF8563_Class {
 	uint8_t begin(TwoWire &port = Wire, int addr = PCF8563_ADDRESS);
 
 	/**
+	 * @brief Converts an error code into descriptive text.
+	 *
+	 * This function takes an error code and returns a corresponding descriptive text. It can be used to convert
+	 * error codes returned by the RTC into human-readable error messages.
+	 *
+	 * @param errorCode The error code to convert.
+	 * @return A pointer to a constant character array containing the descriptive text of the error.
+	 *         If the error code is not recognized, "Unknown error" is returned.
+	 *
+	 * @note The error codes and their meanings are as follows:
+	 *   - 0: Success
+	 *   - 1: I2C data too long to fit in transmit buffer
+	 *   - 2: I2C received NACK on transmit of address
+	 *   - 3: I2C received NACK on transmit of data
+	 *   - 4: I2C other error
+	 *   - 5: I2C timeout
+	 *   - 6: bytesReceived(%i) != bytesRequested(%i)
+	 *   - 7: Measurement out of range
+	 */
+	const char *getErrorText(uint8_t errorCode);
+
+	/**
 	 * @brief Sets the date and time of the RTC.
 	 * @param year The year.
 	 * @param month The month.

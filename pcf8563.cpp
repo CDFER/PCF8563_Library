@@ -39,6 +39,29 @@ uint8_t PCF8563_Class::begin(TwoWire &port, int addr) {
 	return _i2cPort->endTransmission();		// Check if the transmission was successful and return the result
 }
 
+const char *PCF8563_Class::getErrorText(uint8_t errorCode) {
+	switch (errorCode) {
+		case 0:
+			return "Success";
+		case 1:
+			return "I2C data too long to fit in transmit buffer";
+		case 2:
+			return "I2C received NACK on transmit of address";
+		case 3:
+			return "I2C received NACK on transmit of data";
+		case 4:
+			return "I2C other error";
+		case 5:
+			return "I2C timeout";
+		case 6:
+			return "bytesReceived(%i) != bytesRequested(%i)";
+		case 7:
+			return "Measurement out of range";
+		default:
+			return "Unknown error";
+	}
+}
+
 void PCF8563_Class::setDateTime(RTC_Date date) {
 	setDateTime(date.year, date.month, date.day, date.hour, date.minute, date.second);
 	// Call the setDateTime function with individual date and time components
