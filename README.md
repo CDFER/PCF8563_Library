@@ -16,7 +16,6 @@ The `pcf8563-RTC` library is designed to interface ESP chips with the NXP PCF856
 - Not all functions are implemented
 - Not compatible with Lewis' library
 - Only tested with the ESP32 and S2 variants
-- Currently under development
 
 ## Example ESP32 Code
 
