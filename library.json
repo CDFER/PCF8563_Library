@@ -1,6 +1,6 @@
 {
   "name": "pcf8563-rtc",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "An Arduino library for interfacing ESP chips with PCF8563 Real Time Clock using the I2C protocol.",
   "keywords": [
     "rtc",
@@ -18,7 +18,7 @@
     "url": "https://keastudios.co.nz/about.htm",
     "maintainer": true
   },
-  "license": "Other",
+  "license": "MIT",
   "homepage": "https://github.com/CDFER/pcf8563-RTC",
   "frameworks": "arduino",
   "platforms": "*"
